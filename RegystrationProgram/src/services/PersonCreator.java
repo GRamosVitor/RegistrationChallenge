@@ -5,16 +5,17 @@ import java.util.Scanner;
 
 import entities.Person;
 
-public class PersonFactory {
+public class PersonCreator {
 	
-	public static Person createPerson(List<String> questions) {
+	public static Person createPerson(List<String> questions, Scanner sc) {
 		
-		Scanner sc = new Scanner(System.in);
+
 		Person p = new Person();
 		
 		for(int i = 0; i< questions.size(); i++) {
 			System.out.println(questions.get(i));
 			if(questions.get(i).charAt(0) == '1') {
+				sc.nextLine();
 				String name = sc.nextLine();
 				p.setName(name);
 			} else if(questions.get(i).charAt(0) == '2') {
@@ -29,7 +30,6 @@ public class PersonFactory {
 				p.setHeight(height);
 			}
 		}
-		sc.close();
 		return p;
 	}
 }
