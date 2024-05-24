@@ -22,6 +22,10 @@ public class FileCreator {
 		}
 	}
 	
+	public static String createPath(String dbPath, Person p) throws IOException{
+		return dbPath +"\\"+ count(dbPath) + "-" + p.getName().replaceAll("\\s", "").toUpperCase();
+	}
+	
 	public static long count(String dbPath) throws IOException {
 		try (Stream<Path> files = Files.list(Paths.get(dbPath))) {
 			long count = files.count();
@@ -29,7 +33,5 @@ public class FileCreator {
 		}
 	}
 	
-	public static String createPath(String dbPath, Person p) throws IOException{
-		return dbPath +"\\"+ count(dbPath) + "-" + p.getName().replaceAll("\\s", "").toUpperCase();
-	}
+	
 }
