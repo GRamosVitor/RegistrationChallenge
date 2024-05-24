@@ -50,6 +50,15 @@ public class Person {
 	public void setHeight(Double height) {
 		this.height = height;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Nome: %s%n"
+				+ "Email: %s%n"
+				+ "Idade: %d%n"
+				+ "Altura: %.2f", 
+				name, email, age, height);
+	}
 	
 	
 }
