@@ -12,6 +12,10 @@ public class ListUsers {
 		File path = new File(dbPath);
 		File[] files = path.listFiles();
 		int i = 1;
+		
+		System.out.println();
+		System.out.println("==== Registered Users ====");
+		
 		for (File file : files) {
 			System.out.printf(i + " - " + nameWritter(file) + "%n");
 			i++;

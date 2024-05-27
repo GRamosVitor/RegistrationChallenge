@@ -9,7 +9,7 @@ import entities.Person;
 import services.FileCreator;
 import services.ListUsers;
 import services.PersonCreator;
-import services.QuestionnaireCreator;
+import services.QuestionnaireManipulator;
 
 public class Program {
 
@@ -37,58 +37,60 @@ public class Program {
 				int optionNumber = sc.nextInt();
 
 				switch (optionNumber) {
-				case 1:
 
+				case 1:
 					System.out.println();
 					System.out.println("==== User Registration ====");
 
-					questions = QuestionnaireCreator.createQuestions(path);
+					questions = QuestionnaireManipulator.readQuestions(path);
 
 					Person p = PersonCreator.createPerson(questions, sc);
 
 					FileCreator.createDocument(dbPath, p);
 
 					System.out.println();
-					
+
 					System.out.println(p);
-					
+
 					System.out.println();
 					System.out.println("==== Press enter to return ====");
 					System.in.read();
 
 					break;
-				case 2:
-					try {
-						System.out.println();
-						System.out.println("==== Registered Users ====");
-						
-						ListUsers.listUsers(dbPath);
-						
-						System.out.println();
-						System.out.println("==== Press enter to return ====");
-						System.in.read();
 
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				case 2:
+					
+
+					ListUsers.listUsers(dbPath);
+
+					System.out.println();
+					System.out.println("==== Press enter to return ====");
+					System.in.read();
+
 					break;
+					
 				case 3:
-					System.out.println("caso 3");
+					QuestionnaireManipulator.addQuestion(path, sc);
+					
+					System.out.println();
+					System.out.println("==== Press enter to return ====");
+					System.in.read();
+					
 					break;
+					
 				case 4:
 					System.out.println("caso 4");
 					break;
+					
 				case 5:
 					System.out.println("caso 5");
 					break;
+					
 				case 6:
 					System.out.println("==== Programa encerrado ====");
 					loopControl = false;
 					break;
+					
 				default:
 					System.out.println("Enter a number between 1 and 6");
 				}
