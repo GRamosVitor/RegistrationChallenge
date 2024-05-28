@@ -28,21 +28,47 @@ public class QuestionnaireManipulator {
 	}
 
 	public static void addQuestion(String path, Scanner sc) throws FileNotFoundException, IOException {
-		
+
 		List<String> questions = readQuestions(path);
-		
+		sc.nextLine();
 		System.out.println();
 		System.out.println("==== Enter the question to be added to the Questionaire: ====");
-		sc.nextLine();
 		String question = sc.nextLine();
-		String insertion = String.valueOf(questions.size()+1) + " - " + question;
-		
+		String insertion = String.valueOf(questions.size() + 1) + " - " + question;
+
 		File file = new File(path);
-		
+
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
-			
+
 			bw.write(insertion);
 			bw.newLine();
+		}
+	}
+
+	public static void deleteQuestion(String path, Scanner sc) throws FileNotFoundException, IOException {
+		
+		File file = new File(path);
+		List<String> questions = readQuestions(path);
+
+		for (String question : questions) {
+			System.out.println(question);
+		}
+		
+		System.out.println("==== Enter the question nbumber to be deleted from the Questionaire: ====");
+		int number = sc.nextInt();
+		number--;
+		
+		if (number < 4) {
+			System.out.println("It is not possible to delete questions 1 to 4");
+		} else {
+			questions.remove(number);
+		}
+				
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+			for(String question : questions) {
+				bw.write(question);
+				bw.newLine();
+			}
 		}
 	}
 }

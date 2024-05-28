@@ -12,7 +12,7 @@ public class TestProgram {
 		Scanner sc = new Scanner(System.in);
 		String path = "D:\\temp\\SistemaDeCadastros\\formulario.txt";
 		try {
-			QuestionnaireManipulator.addQuestion(path, sc);
+			QuestionnaireManipulator.deleteQuestion(path, sc);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

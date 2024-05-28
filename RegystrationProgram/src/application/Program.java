@@ -59,8 +59,6 @@ public class Program {
 					break;
 
 				case 2:
-					
-
 					ListUsers.listUsers(dbPath);
 
 					System.out.println();
@@ -79,7 +77,10 @@ public class Program {
 					break;
 					
 				case 4:
-					System.out.println("caso 4");
+					QuestionnaireManipulator.deleteQuestion(path, sc);
+					System.out.println();
+					System.out.println("==== Press enter to return ====");
+					System.in.read();
 					break;
 					
 				case 5:
