@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class QuestionnaireManipulator {
+public class QuestionnaireService {
 
 	public static List<String> readQuestions(String path) throws FileNotFoundException, IOException {
 		List<String> questions = new ArrayList<>();
