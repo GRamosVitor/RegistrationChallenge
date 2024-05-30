@@ -23,7 +23,7 @@ public class FileService {
 	}
 	
 	public static String createPath(String dbPath, User p) throws IOException{
-		return dbPath +"\\"+ count(dbPath) + "-" + p.getName().replaceAll("\\s", "").toUpperCase();
+		return dbPath + "\\" + (count(dbPath ) + 1) + "-" + p.getName().replaceAll("\\s", "").toUpperCase() + ".txt" ;
 	}
 	
 	public static long count(String dbPath) throws IOException {
