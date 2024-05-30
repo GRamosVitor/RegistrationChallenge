@@ -1,17 +1,17 @@
-package entities;
+package model.entities;
 
-public class Person {
+public class User {
 	
 	private String name;
 	private String email;
 	private Integer age;
 	private Double height;
 	
-	public Person() {
+	public User() {
 		
 	}
 
-	public Person(String name, String email, Integer age, Double height) {
+	public User(String name, String email, Integer age, Double height) {
 		super();
 		this.name = name;
 		this.email = email;

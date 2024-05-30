@@ -1,28 +1,28 @@
 package application;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import entities.Person;
-import services.FileCreator;
-import services.UserService;
-import services.PersonCreator;
-import services.QuestionnaireService;
+import model.entities.User;
+import model.services.FileService;
+import model.services.QuestionnaireService;
+import model.services.UserService;
 
 public class Program {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		String path = "D:\\temp\\SistemaDeCadastros\\formulario.txt";
 		String dbPath = "D:\\temp\\SistemaDeCadastros\\database";
 
 		boolean loopControl = true;
 		Scanner sc = new Scanner(System.in);
-		
+
 		do {
 			try {
+
 				List<String> questions;
-				
 
 				System.out.println("==== Select an Option ====");
 				System.out.println("1 - Register new User");
@@ -42,10 +42,10 @@ public class Program {
 					System.out.println("==== User Registration ====");
 
 					questions = QuestionnaireService.readQuestions(path);
+					
+					User p = UserService.createNewUser(questions, sc);
 
-					Person p = PersonCreator.createPerson(questions, sc);
-
-					FileCreator.createDocument(dbPath, p);
+					FileService.createDocument(dbPath, p);
 
 					System.out.println();
 
@@ -77,7 +77,7 @@ public class Program {
 
 				case 4:
 					QuestionnaireService.deleteQuestion(path, sc);
-					
+
 					System.out.println();
 					System.out.println("==== Press enter to return ====");
 					System.in.read();
@@ -85,7 +85,7 @@ public class Program {
 
 				case 5:
 					UserService.searchUsers(dbPath, sc);
-					
+
 					System.out.println();
 					System.out.println("==== Press enter to return ====");
 					System.in.read();
@@ -100,11 +100,11 @@ public class Program {
 					System.out.println("Enter a number between 1 and 6");
 				}
 
-				
-
 			} catch (Exception e) {
 				System.out.println("Error: " + e.getMessage());
-				e.printStackTrace();
+				System.out.println();
+				System.out.println("==== Press enter to return ====");
+				System.in.read();
 			}
 
 		} while (loopControl != false);

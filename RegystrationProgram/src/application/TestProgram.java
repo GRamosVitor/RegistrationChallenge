@@ -1,80 +1,40 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
-import entities.Person;
+import model.entities.User;
+import model.services.QuestionnaireService;
+import model.services.UserService;
 
 public class TestProgram {
 
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		String path = "D:\\temp\\SistemaDeCadastros\\database";
+		String path = "D:\\temp\\SistemaDeCadastros\\formulario.txt";
+		boolean loopControl = true;
+		do {
 		try {
-			//createPersonList(path);
-			findUsers(path, sc);
+			List<String> questions = QuestionnaireService.readQuestions(path);
+
+			for (String str : questions) {
+				System.out.println(str);
+			}
+			
+			User p = UserService.createNewUser(questions, sc);
+			
+			System.out.println(p);
+			loopControl = false;
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
 
-	}
-
-	public static Set<Person> createPersonList(String dbPath) throws FileNotFoundException, IOException {
-		Set<Person> persons = new HashSet<>();
-		File directory = new File(dbPath);
-		File[] files = directory.listFiles();
-
-		if (files != null) {
-			for (File file : files) {
-				try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-					String name = br.readLine();
-					String email = br.readLine();
-					int age = Integer.valueOf(br.readLine());
-					double height = Double.valueOf(br.readLine());
-					Person p = new Person(name, email, age, height);
-					persons.add(p);
-				}
 			}
-		}
-		return persons;
-	}
-
-	public static void findUsers(String db, Scanner sc) throws FileNotFoundException, IOException {
-
-		Set<Person> persons = createPersonList(db);
-		sc.nextLine();
-		System.out.println();
-
-		System.out.println("Enter the full or partial name to search ");
-		String nameInput = sc.nextLine();
-
-		List<String> resultNames = new ArrayList<>();
-
-		for (Person person : persons) {
-			if (person.getName().toLowerCase().contains(nameInput.toLowerCase())
-					|| person.getEmail().toLowerCase().contains(nameInput.toLowerCase())) {
-				resultNames.add(person.getName());
-			}
-		}
-
-		System.out.println();
-
-		if (resultNames.isEmpty()) {
-			System.out.println("No match found");
-		} else {
-			for (String str : resultNames) {
-				System.out.println(str);
-			}
-		}
+		} while (loopControl == true); 
 	}
 }

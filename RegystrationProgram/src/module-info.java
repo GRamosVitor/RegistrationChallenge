@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author gramo
- *
- */
-module RegystrationProgram {
-}

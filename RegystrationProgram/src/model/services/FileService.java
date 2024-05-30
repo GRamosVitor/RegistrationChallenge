@@ -1,4 +1,4 @@
-package services;
+package model.services;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,11 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import entities.Person;
+import model.entities.User;
 
-public class FileCreator {
+public class FileService {
 
-	public static void createDocument(String dbPath, Person p) throws IOException {
+	public static void createDocument(String dbPath, User p) throws IOException {
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(createPath(dbPath, p)))) {
 			String[] lines = new String[] {p.getName(), p.getEmail(), p.getAge().toString(), p.getHeight().toString()};
 			for(String line : lines) {
@@ -22,7 +22,7 @@ public class FileCreator {
 		}
 	}
 	
-	public static String createPath(String dbPath, Person p) throws IOException{
+	public static String createPath(String dbPath, User p) throws IOException{
 		return dbPath +"\\"+ count(dbPath) + "-" + p.getName().replaceAll("\\s", "").toUpperCase();
 	}
 	
