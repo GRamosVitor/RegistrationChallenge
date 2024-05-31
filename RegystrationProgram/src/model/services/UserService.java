@@ -60,28 +60,7 @@ public class UserService {
 		}
 	}
 
-	public static Set<User> createUserList(String dbPath) throws FileNotFoundException, IOException {
-
-		Set<User> persons = new HashSet<>();
-		File directory = new File(dbPath);
-		File[] files = directory.listFiles();
-
-		if (files != null) {
-			for (File file : files) {
-				try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-					String name = br.readLine();
-					String email = br.readLine();
-					int age = Integer.valueOf(br.readLine());
-					double height = Double.valueOf(br.readLine());
-					User p = new User(name, email, age, height);
-					persons.add(p);
-				}
-			}
-		}
-		return persons;
-	}
-
-	public static User createNewUser(List<String> questions, Scanner sc) throws DomainException {
+	public static User createNewUser(List<String> questions, Scanner sc, String dbPath) throws DomainException, FileNotFoundException, IOException {
 
 		User p = new User();
 
@@ -101,6 +80,9 @@ public class UserService {
 				String email = sc.nextLine();
 				if (validateEmail(email)) {
 					throw new DomainException("E-mail must contain an @");
+				}
+				if(checkEmailDuplicity(email, dbPath)){
+					throw new DomainException("There is already a user with this e-mail");
 				}
 				p.setEmail(email);
 
@@ -123,6 +105,27 @@ public class UserService {
 		}
 		return p;
 	}
+	
+	public static Set<User> createUserList(String dbPath) throws FileNotFoundException, IOException {
+
+		Set<User> persons = new HashSet<>();
+		File directory = new File(dbPath);
+		File[] files = directory.listFiles();
+
+		if (files != null) {
+			for (File file : files) {
+				try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+					String name = br.readLine();
+					String email = br.readLine();
+					int age = Integer.valueOf(br.readLine());
+					double height = Double.valueOf(br.readLine());
+					User p = new User(name, email, age, height);
+					persons.add(p);
+				}
+			}
+		}
+		return persons;
+	}
 
 	public static String nameWritter(File file) throws FileNotFoundException, IOException {
 
@@ -140,6 +143,17 @@ public class UserService {
 		return !email.contains("@");
 	}
 
+	public static boolean checkEmailDuplicity (String email, String dbPath) throws FileNotFoundException, IOException {
+		Set<User> persons = createUserList(dbPath);
+		boolean emailDuplicate = false;
+		for (User p : persons) {
+			if (p.getEmail().contains(email)) {
+				emailDuplicate = true;
+			}
+		}
+		return emailDuplicate;
+	}
+	
 	public static boolean validateAge(int age) {
 		return age < 18;
 	}
@@ -147,4 +161,5 @@ public class UserService {
 	public static boolean validateHeight(String height) {
 		return height.contains(",");
 	}
+	
 }

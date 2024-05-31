@@ -43,7 +43,7 @@ public class Program {
 
 					questions = QuestionnaireService.readQuestions(path);
 					
-					User p = UserService.createNewUser(questions, sc);
+					User p = UserService.createNewUser(questions, sc, dbPath);
 
 					FileService.createDocument(dbPath, p);
 
